@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int          @id @map("_id")
+  username    String       @unique
+  password    String
+  apiKey      String?      @unique
+  investments Investment[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Investment {
+  id            Int           @id @map("_id")
+  userId        Int
+  assetType     String
+  symbol        String        @unique
+  purchasePrice Float
+  quantity      Float
+  dateAcquired  DateTime
+  user          User          @relation(fields: [userId], references: [id])
+  transactions  Transaction[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Transaction {
+  id           Int             @id @map("_id")
+  investmentId Int
+  type         TransactionType
+  price        Float
+  quantity     Float
+  date         DateTime
+  investment   Investment      @relation(fields: [investmentId], references: [id])
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}
+
+enum TransactionType {
+  BUY
+  SELL
+}
