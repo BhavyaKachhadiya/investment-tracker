@@ -1,10 +1,10 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
-
 import { connectDB } from "@/utils/connectdb";
 import { PrismaClient } from '@prisma/client'
-import { NextResponse } from 'next/server';
+import 'dotenv/config'
 const prisma = new PrismaClient();
+
 const handle = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
@@ -38,7 +38,7 @@ const handle = NextAuth({
                         data: {
                             email: profile.email,
                             user_profile: profile.picture,
-                            name: profile.name,
+                            username: profile.name,
                             password:profile.at_hash
                         }
                     });
