@@ -5,8 +5,7 @@ const page = () => {
 
     return (
        <>
-            <Navbar></Navbar>
-           
+            <Navbar/>
        </>
      
     )

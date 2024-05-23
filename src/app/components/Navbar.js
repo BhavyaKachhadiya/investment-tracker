@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className="font-semibold text-[1rem]">
         <Link href={"/"}>
           {" "}
-          WEB <span className="text-red">FORUM</span>
+          Investment Tracker
         </Link>
       </div>
       <div className="relative">
@@ -35,7 +35,7 @@ const Navbar = () => {
               className="w-8 h-8 rounded-full"
             />
           ) : (
-            <span>Account</span>
+            <span>Login</span>
           )}
         </div>
         {showDropdown && (
@@ -46,7 +46,7 @@ const Navbar = () => {
 
                 <Link
                   className="block px-4 py-2 text-sm text-gray-700 bg-s-blue hover:bg-red  w-full text-left"
-                  href={`/u/${session.user.name}`}
+                  href={"/"}
                   >
                   Profile
                 </Link>
@@ -59,14 +59,11 @@ const Navbar = () => {
                   </div>
               ) : (
                 <div>
-                <Link href={"/login"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                <button href={"/login"} onClick={()=> {signIn("google")}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
       
-                    Login
-                </Link>
-              <Link href={"/signup"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
-                  Sign Up
+                    Google
+                </button>
                 
-              </Link>
                 </div>
               )}
               {/* Add more dropdown items here */}
