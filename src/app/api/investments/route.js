@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { connectDB } from "@/utils/connectdb";
 import { NextResponse } from "next/server";
+import { useSession } from "next-auth/react";
 
 const prisma = new PrismaClient();
 
@@ -18,11 +19,12 @@ export const GET = async (req) => {
 };
 
 export const POST = async (req, res) => {
+  const { data: session } = useSession();
   try {
-    const { assetType, symbol, purchasePrice, quantity, dateAcquired, type } =
+    const { assetType, symbol, purchasePrice, quantity, dateAcquired, type,stocktype,investmentgoal} =
       await req.json();
     const user = await prisma.user.findUnique({
-      where: { username: "Bhavya" }, // Replace with actual username
+      where: { email: session.user.email }, // Replace with actual username
     });
     await connectDB();
 
@@ -36,6 +38,8 @@ export const POST = async (req, res) => {
         dateAcquired,
         user: { connect: { id: user.id } },
         type,
+        stocktype,
+        investmentgoal
       },
     });
 
@@ -62,6 +66,8 @@ export const PUT = async (req, res) => {
       quantity,
       dateAcquired,
       type,
+      stocktype,
+      investmentgoal
     } = await req.json();
 
     if (!id) {
@@ -81,6 +87,8 @@ export const PUT = async (req, res) => {
         quantity,
         dateAcquired,
         type,
+        stocktype,
+        investmentgoal
       },
     });
 

@@ -33,6 +33,8 @@ model Investment {
   purchasePrice Float
   quantity      Float
   dateAcquired  DateTime?
+  investmentgoal Float?
+  stocktype     StockType?
   type          TransactionType
   user          User            @relation(fields: [userId], references: [id])
   createdAt     DateTime        @default(now())
@@ -43,7 +45,11 @@ enum TransactionType {
   BUY
   SELL
 }
-
+enum StockType {
+  Large
+  Mid
+  Small
+}
 enum AssetType {
   STOCK
   BOND
