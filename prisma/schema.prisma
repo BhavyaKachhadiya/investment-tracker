@@ -21,6 +21,7 @@ model User {
   password    String
   apiKey      String?      @unique
   investments Investment[]
+  investmentgoal Float?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
@@ -33,7 +34,6 @@ model Investment {
   purchasePrice Float
   quantity      Float
   dateAcquired  DateTime?
-  investmentgoal Float?
   stocktype     StockType?
   type          TransactionType
   user          User            @relation(fields: [userId], references: [id])

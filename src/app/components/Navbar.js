@@ -46,9 +46,15 @@ const Navbar = () => {
 
                 <Link
                   className="block px-4 py-2 text-sm text-gray-700 bg-s-blue hover:bg-red  w-full text-left"
-                  href={"/"}
+                  href={"/dashboard"}
                   >
-                  Profile
+                  Dashboard
+                </Link>
+                <Link
+                  className="block px-4 py-2 text-sm text-gray-700 bg-s-blue hover:bg-red  w-full text-left"
+                  href={"/setgoal"}
+                  >
+                  Set Goal
                 </Link>
                 <button
                   className="block px-4 py-2 text-sm text-gray-700 bg-s-blue hover:bg-red w-full text-left"
