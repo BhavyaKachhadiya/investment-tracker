@@ -1,13 +1,25 @@
 import { PrismaClient } from "@prisma/client";
 import { connectDB } from "@/utils/connectdb";
 import { NextResponse } from "next/server";
+import { getToken } from 'next-auth/jwt';
 
 const prisma = new PrismaClient();
+const secret = process.env.NEXTAUTH_SECRET;
+export const GET = async (req,res) => {
 
-export const GET = async (req) => {
+
   try {
     await connectDB();
-    const investment = await prisma.investment.findMany();
+    const token = await getToken({ req, secret });
+   
+    const investment = await prisma.user.findUnique({
+      where: {
+        email: token.email,
+        username: token.name,
+      },
+      include: { investments: true  }
+      
+    });
     return NextResponse.json({ investment }, { status: 200 });
   } catch (error) {
     console.error(error);

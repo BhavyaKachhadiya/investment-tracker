@@ -1,16 +1,18 @@
 import { PrismaClient } from "@prisma/client";
-import { getSession } from "next-auth/react";
+
 import { NextResponse } from "next/server";
-
+import { getToken } from 'next-auth/jwt';
 const prisma = new PrismaClient();
-
+const secret = process.env.NEXTAUTH_SECRET;
 export const GET = async (req, res) => {
-  const session = await getSession({ req });
 
   try {
-    const user = await prisma.user.findFirst({
+    const token = await getToken({ req, secret });
+   
+    const user = await prisma.user.findUnique({
       where: {
-        email: session?.user?.email
+        email: token.email,
+        username: token.name,
       },
       select: {
         investmentgoal:true
