@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { connectDB } from "@/utils/connectdb";
 import { NextResponse } from "next/server";
-import { useSession } from "next-auth/react";
 
 const prisma = new PrismaClient();
 
@@ -19,27 +18,35 @@ export const GET = async (req) => {
 };
 
 export const POST = async (req, res) => {
-  const { data: session } = useSession();
+  
   try {
-    const { assetType, symbol, purchasePrice, quantity, dateAcquired, type,stocktype,investmentgoal} =
+    const {formData, user_email,username} =
       await req.json();
+      console.log(formData,user_email,username);
     const user = await prisma.user.findUnique({
-      where: { email: session.user.email }, // Replace with actual username
+      where: { email: user_email,username: username }, // Replace with actual username
     });
     await connectDB();
+    var assetType = formData.investmentType
+    var assetType= assetType.toString().toUpperCase();
+
+    var buySell = formData.buySell
+    var buySell= buySell.toString().toUpperCase();
+
+    var buyDate = formData.buyDate;
+    buyDate =new Date(buyDate)
 
     // Create the post with the user ID and category name
     const investment_create = await prisma.investment.create({
       data: {
-        assetType,
-        symbol,
-        purchasePrice,
-        quantity,
-        dateAcquired,
+        assetType:assetType,
+        symbol:formData.nameSymbol,
+        purchasePrice:Number(formData.purchasePrice),
+        quantity:Number(formData.quantity),
+        dateAcquired:buyDate,
         user: { connect: { id: user.id } },
-        type,
-        stocktype,
-        investmentgoal
+        type:buySell,
+        stocktype:formData.StockType
       },
     });
 

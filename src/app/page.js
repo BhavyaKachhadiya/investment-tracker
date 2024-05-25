@@ -1,4 +1,5 @@
 import Navbar from "./components/Navbar"
+import Redirect from "./components/Redirect"
 
 const page = () => {
 
@@ -6,6 +7,7 @@ const page = () => {
     return (
        <>
             <Navbar/>
+            <Redirect/>
        </>
      
     )

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useSession, signIn } from 'next-auth/react';
+import Navbar from '../components/Navbar';
 
 const SetGoalPage = () => {
   const { data: session } = useSession();
@@ -44,6 +45,8 @@ const SetGoalPage = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen flex items-center justify-center bg-[#15191E]">
       <div className="bg-[#15191E] p-8 rounded shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Set Your Goal</h1>
@@ -84,6 +87,7 @@ const SetGoalPage = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
